@@ -1,9 +1,7 @@
 resource "aws_secretsmanager_secret" "secrets" {
-  for_each = {
-    for secret in var.secretos : secret.nombre => secret
-  }
+  for_each = local.secretos_map
 
-  name                    = each.value.nombre
+  name                    = each.key
   description             = each.value.descripcion
   recovery_window_in_days = 0
 
@@ -12,7 +10,7 @@ resource "aws_secretsmanager_secret" "secrets" {
   tags_all = merge(
     var.tags,
     {
-      "Name" = each.value.nombre
+      "Name" = each.key
     }
   )
 }
