@@ -7,10 +7,10 @@ resource "aws_secretsmanager_secret" "secrets" {
 
   kms_key_id = "alias/aws/secretsmanager"
 
-  tags_all = merge(
+  tags = merge(
     var.tags,
     {
-      "Name" = each.key
+      "Name" = each.value.nombre
     }
   )
 }

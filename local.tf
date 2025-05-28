@@ -1,6 +1,9 @@
 locals {
-  secretos_numerados = {
-    for idx, secret in var.secretos :
-    format("%02d_%s", idx + 1, secret.nombre) => secret
+  secretos_map = {
+    for secret in var.secretos :
+    "${secret.id}_${secret.nombre}" => {
+      nombre      = secret.nombre
+      descripcion = secret.descripcion
+    }
   }
 }
